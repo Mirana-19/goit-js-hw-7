@@ -2,17 +2,23 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const galleryEl = document.querySelector('.gallery');
-// galleryEl.addEventListener('click', showBackdrop);
 
-function createGalleryMarkup(items) {
-  return items
+function renderGalleryMarkup(items) {
+  return (galleryEl.innerHTML = items
     .map(
-      item =>
+      ({ original, preview, description }) =>
         `<li class="gallery__item">
-    <a class="gallery__link" href="${item.original}">
-      <img class="gallery__image" src="${item.preview}" alt="${item.description}" />
-    </a>
-   </li>`
+        <a class="gallery__link" href="${original}">
+        <img class="gallery__image" src="${preview}" alt="${description}" title="${description}" />
+        </a>
+        </li>`
     )
-    .join('');
+    .join(''));
 }
+
+renderGalleryMarkup(galleryItems);
+
+var lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
